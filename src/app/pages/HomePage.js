@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
+import Map from '../components/Map'; // Assuming Map component is already created
 //import { Tabs, TabsList, TabsTrigger } from "../components/ui/Tabs";
 
 export default function HomePage() {
@@ -46,9 +47,8 @@ export default function HomePage() {
       </div>
 
       {/* Map Section */}
-      <div className="relative bg-white/80 backdrop-blur-md w-full max-w-4xl h-96 rounded-3xl shadow-lg p-6 mb-6 z-10">
-        <div className="w-full h-full border-2 border-dashed border-teal-300 flex items-center justify-center text-teal-600">
-          (Interactive Map Here)
+      <div className="relative w-full max-w-4xl h-[500px] rounded-3xl shadow-lg p-6 mb-6 z-10">
+          <Map />
         </div>
 
         {/* Legend */}
@@ -60,7 +60,7 @@ export default function HomePage() {
             <li>🔴 High Bloom</li>
           </ul>
         </div>
-      </div>
+      {/*</div>*/}
 
       {/* Buttons */}
       <div className="flex gap-4 z-10">
