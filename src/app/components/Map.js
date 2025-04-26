@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from 'react';
 import { MapContainer, TileLayer, Polygon, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
