@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
-import { Tabs, TabsList, TabsTrigger } from "../components/ui/Tabs";
+//import { Tabs, TabsList, TabsTrigger } from "../components/ui/Tabs";
 
 export default function HomePage() {
   const [search, setSearch] = useState('');
@@ -15,7 +15,7 @@ export default function HomePage() {
       <div className="absolute top-0 left-0 w-48 h-48 bg-green-200 opacity-30 rounded-full filter blur-2xl animate-pulse"></div>
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-teal-300 opacity-20 rounded-full filter blur-3xl animate-pulse"></div>
 
-      {/* Tabs */}
+      {/* Tabs 
       <Tabs defaultValue="map" className="w-full max-w-4xl mb-6 z-10">
         <TabsList className="grid grid-cols-4 gap-2 bg-white/70 backdrop-blur rounded-xl p-2 shadow">
           <TabsTrigger value="map">Map</TabsTrigger>
@@ -23,7 +23,7 @@ export default function HomePage() {
           <TabsTrigger value="insight">Insight</TabsTrigger>
           <TabsTrigger value="chat">Chat</TabsTrigger>
         </TabsList>
-      </Tabs>
+      </Tabs> */}
 
       {/* Logo Section */}
       <div className="flex items-center gap-3 mb-6 z-10">
