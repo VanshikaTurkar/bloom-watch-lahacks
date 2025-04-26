@@ -31,11 +31,6 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/about" className="hover:underline">
-              About
-            </Link>
-          </li>
-          <li>
             <Link href="/contact" className="hover:underline">
               Contact
             </Link>
