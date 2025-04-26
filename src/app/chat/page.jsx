@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import './page.css';
+import Navbar from '../components/Navbar'
 
 export default function ChatPage() {
   const [messages, setMessages] = useState([
@@ -57,6 +58,7 @@ What would you like to know?`
 
   return (
     <div className="chat-container">
+      <Navbar />
       <header className="chat-header">🌊 MarineBot</header>
       <main className="chat-main">
         {messages.map((msg, i) => (
