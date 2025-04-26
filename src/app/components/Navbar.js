@@ -17,6 +17,9 @@ export default function Navbar() {
         <Tabs defaultValue={defaultValue} className="w-full mb-6 z-10">
           <TabsList className="grid grid-cols-4 gap-2 bg-white/70 backdrop-blur-sm rounded-full p-2 shadow-lg">
             <TabsTrigger value="map" className="text-center">
+              <Link href="/">Home</Link>
+            </TabsTrigger>
+            <TabsTrigger value="map" className="text-center">
               <Link href="/map">Map</Link>
             </TabsTrigger>
             <TabsTrigger value="report" className="text-center">

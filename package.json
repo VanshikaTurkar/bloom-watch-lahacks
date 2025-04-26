@@ -9,19 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.4",
     "leaflet": "^1.9.4",
+    "lightningcss": "^1.29.3",
     "next": "15.3.1",
     "openai": "^4.96.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-leaflet": "^5.0.0",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/react": "19.1.2",
-    "tailwindcss": "^4",
     "typescript": "5.8.3"
   }
 }
