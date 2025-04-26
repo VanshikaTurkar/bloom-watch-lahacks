@@ -1,8 +1,11 @@
-import Image from "next/image";
-import Map from "../app/components/Map";
+"use client";
+import dynamic from "next/dynamic";
+
+// Dynamic import disables SSR for this component
+const Map = dynamic(() => import("./components/Map"), { ssr: false });
+
 // src/app/page.js
 import Navbar from "../app/components/Navbar";
-
 
 export default function Home() {
   return (
