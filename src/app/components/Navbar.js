@@ -40,6 +40,11 @@ export default function Navbar() {
               Contact
             </Link>
           </li>
+          <li>
+            <Link href="/chat" className="hover:underline">
+              Chat
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
