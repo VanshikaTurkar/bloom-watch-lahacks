@@ -31,13 +31,13 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/about" className="hover:underline">
-              About
+            <Link href="/contact" className="hover:underline">
+              Contact
             </Link>
           </li>
           <li>
-            <Link href="/contact" className="hover:underline">
-              Contact
+            <Link href="/chat" className="hover:underline">
+              Chat
             </Link>
           </li>
         </ul>
