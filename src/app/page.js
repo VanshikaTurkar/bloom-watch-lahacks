@@ -1,6 +1,11 @@
 "use client";
-
 import dynamic from "next/dynamic";
+
+// Dynamic import disables SSR for this component
+const Form = dynamic(() => import("./components/FormSubmit"), {ssr:false});
+const Alert = dynamic(() => import("./components/Alert"), {ssr:false});
+
+// src/app/page.js
 import Navbar from "../app/components/Navbar";
 import HomePage from "../app/pages/HomePage"; // <-- You need to import HomePage!
 
@@ -11,7 +16,15 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <HomePage /> {/* <-- Correct usage */}
+      <main className="p-8">
+        <h1 className="text-4xl font-bold mb-4">Welcome to Next.js!</h1>
+        <p className="text-lg text-gray-600">
+          This is your default home page with a navbar.
+        </p>
+        <Form></Form>
+        <Map></Map>
+        <Alert></Alert>
+      </main>
     </>
   );
 }

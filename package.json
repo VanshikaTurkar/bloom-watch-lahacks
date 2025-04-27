@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.4",
+    "axios": "^1.9.0",
+    "cors": "^2.8.5",
+    "firebase": "^11.6.1",
     "leaflet": "^1.9.4",
     "lightningcss": "^1.29.3",
     "lucide-react": "^0.503.0",
