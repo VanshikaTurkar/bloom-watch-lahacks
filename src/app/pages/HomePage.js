@@ -3,15 +3,15 @@
 import { useState } from 'react';
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
-import Map from '../components/Map'; // Assuming Map component is already created
+import Map from '../map/Map'; // Assuming Map component is already created
 //import { Tabs, TabsList, TabsTrigger } from "../components/ui/Tabs";
 
 export default function HomePage() {
   const [search, setSearch] = useState('');
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-teal-100 to-blue-200 flex flex-col items-center p-6 relative overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-teal-300 via-blue-300 to-purple-300 opacity-50 blur-3xl animate-gradient bg-[length:400%_400%]"></div>
+    <main className="min-h-screen /*bg-gradient-to-br from-teal-100 to-blue-200*/ flex flex-col items-center p-6 relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 /*bg-gradient-to-br from-teal-300 via-blue-300 to-purple-300 opacity-50*/ blur-3xl animate-gradient bg-[length:400%_400%]"></div>
       {/* Background Effects */}
       <div className="absolute top-0 left-0 w-48 h-48 bg-green-200 opacity-30 rounded-full filter blur-2xl animate-pulse"></div>
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-teal-300 opacity-20 rounded-full filter blur-3xl animate-pulse"></div>

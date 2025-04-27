@@ -16,10 +16,11 @@ html, body {
   flex-direction: column;
   align-items: center;
   padding: 1.5rem;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;    /* allow taller content */
+  overflow-y: auto;     /* enable vertical scrolling */
   background: linear-gradient(to bottom right, #ccfbf1, #bfdbfe);
 }
+
 .chat-page::before {
   content: "";
   position: absolute;
