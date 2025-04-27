@@ -3,6 +3,9 @@
 import Navbar from '../components/Navbar';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig"; // Import your db instance from firebaseConfig.js
 
 type Report = {
   type: 'General' | 'Bloom' | 'Animal';
@@ -22,7 +25,37 @@ const reports: Report[] = [
 
 export default function ReportsDashboard() {
   const router = useRouter();
-
+  const [submissions, setSubmissions] = useState([]); // State to store the submissions
+    const [loading, setLoading] = useState(true); // State to manage loading state
+    const [error, setError] = useState(null); // State for errors
+  
+    useEffect(() => {
+      const fetchSubmissions = async () => {
+        try {
+          const querySnapshot = await getDocs(collection(db, "submissions")); // Retrieve all documents from the 'submissions' collection
+          const submissionsData = querySnapshot.docs.map(doc => ({
+            id: doc.id, // Document ID
+            ...doc.data() // Document data
+          }));
+          setSubmissions(submissionsData); // Set the submissions in state
+        } catch (error) {
+          console.error("Error getting submissions: ", error);
+          setError("Failed to fetch submissions.");
+        } finally {
+          setLoading(false); // Set loading to false after the request is done
+        }
+      };
+  
+      fetchSubmissions();
+    }, []); // The empty array makes this effect run only once when the component mounts
+  
+    if (loading) {
+      return <div>Loading submissions...</div>;
+    }
+  
+    if (error) {
+      return <div>{error}</div>;
+    }
   return (
     <main className={styles.page}>
       <Navbar />
@@ -42,14 +75,14 @@ export default function ReportsDashboard() {
         <center><h1 className={styles.heading}>Reports Dashboard</h1></center>
 
         <div className={styles.grid}>
-          {reports.map((report, index) => (
+        {submissions.map((submission, index) => (
             <div key={index} className={styles.reportCard}>
-              <div className={`${styles.badge} ${styles[report.type.toLowerCase()]}`}>
-                {report.type}
+              <div className={`${styles.badge} ${styles[submission.reportType]}`}>
+                {submission.reportType}
               </div>
-              <h2 className={styles.location}>{report.location}</h2>
-              <p className={styles.description}>{report.description}</p>
-              <p className={styles.date}>{report.date}</p>
+              <h2 className={styles.location}>{submission.location.address}</h2>
+              <p className={styles.description}>{submission.description}</p>
+              <p className={styles.date}>{new Date(submission.date.seconds * 1000).toLocaleString()}</p>
             </div>
           ))}
         </div>
