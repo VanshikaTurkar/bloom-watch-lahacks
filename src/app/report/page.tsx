@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import Navbar from '../components/Navbar'; // ✅ importing your Navbar
 import styles from './page.module.css';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebaseConfig"; // Adjust the import path as needed
+
+
+  
 
 const ReportBloom: React.FC = () => {
   const [reportType, setReportType] = useState<'general' | 'bloom' | 'animal'>('bloom');
@@ -36,21 +41,21 @@ const ReportBloom: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!location.address) {
-      setMessage({ text: 'Please enter a location.', type: 'error' });
-      return;
-    }
-    setIsSubmitting(true);
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (!location.address) {
+  //     setMessage({ text: 'Please enter a location.', type: 'error' });
+  //     return;
+  //   }
+  //   setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setMessage({ text: 'Report submitted successfully!', type: 'success' });
-      setDescription('');
-      setLocation({ address: '' });
-    }, 1000);
-  };
+  //   setTimeout(() => {
+  //     setIsSubmitting(false);
+  //     setMessage({ text: 'Report submitted successfully!', type: 'success' });
+  //     setDescription('');
+  //     setLocation({ address: '' });
+  //   }, 1000);
+  // };
 
   useEffect(() => {
     if (message.text) {
@@ -58,6 +63,52 @@ const ReportBloom: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [message]);
+
+  const [formData, setFormData] = useState({
+    reportType: "",
+    location: "",
+    description: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    //const { reportType, location, description } = formData;
+    console.log("ReportType: " + reportType)
+    console.log("Location: " + location)
+    console.log("Description: " + description)
+
+    if (!reportType || !location || !description) {
+      alert("All fields are required!");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      console.log("ReportType: " + reportType)
+      console.log("Location: " + location)
+      console.log("Description: " + description)
+      await addDoc(collection(db, "submissions"), {
+        reportType,
+        location,
+        description,
+        date: new Date(),
+      });
+      alert("Submission saved successfully!");
+      setFormData({ reportType: "", location: "", description: "" });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert("An error occurred while saving the submission.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.page}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "./firebaseConfig"; // Adjust the import path as needed
+import { db } from "../firebaseConfig"; // Adjust the import path as needed
 
 const FormSubmit = () => {
   const [formData, setFormData] = useState({

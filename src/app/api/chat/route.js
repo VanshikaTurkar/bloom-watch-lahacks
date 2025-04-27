@@ -1,4 +1,3 @@
-// src/app/api/chat/route.js
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -6,51 +5,13 @@ const openai = new OpenAI({
   baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
 });
 
-// Helper: reliably extract a single JSON object from messy raw text
-function extractJSON(raw) {
-  let inString = false;
-  let escapeNext = false;
-  let depth = 0;
-  let start = -1;
-
-  for (let i = 0; i < raw.length; i++) {
-    const ch = raw[i];
-    if (!inString) {
-      if (ch === "{") {
-        if (depth === 0) start = i;
-        depth++;
-      } else if (ch === "}") {
-        depth--;
-        if (depth === 0 && start !== -1) {
-          return raw.slice(start, i + 1);
-        }
-      } else if (ch === '"') {
-        inString = true;
-      }
-    } else {
-      if (escapeNext) {
-        escapeNext = false;
-      } else if (ch === "\\") {
-        escapeNext = true;
-      } else if (ch === '"') {
-        inString = false;
-      }
-    }
-  }
-  return null;
-}
-
 export async function POST(req) {
   const { message } = await req.json();
   if (!message) {
-    return new Response(
-      JSON.stringify(
-        { reply: "Please send a valid message.", suggestions: [] },
-        null,
-        2
-      ),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ reply: "Please send a valid message.", suggestions: [] }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 
   try {
@@ -61,63 +22,52 @@ export async function POST(req) {
           role: "system",
           content: `
 You are AlgaeAdvisor 🌊.
-Respond only with a JSON object, for example:
-
-\`\`\`json
-{
-  "reply": "## What are algae blooms?\\nThey are…",
-  "suggestions": ["What causes them?", "Are they harmful?"]
-}
-\`\`\`
-
-The server will strip any code fences and extract the JSON automatically.
+When you reply, output a JSON object with two keys:
+- "reply": a Markdown-formatted string
+- "suggestions": an array of up to 4 suggestions
+Wrap it inside \`\`\`json\n ... \`\`\` fences.
 `
         },
         { role: "user", content: message }
       ],
-      max_tokens: 300
+      max_tokens: 700  // increased to reduce cutoffs
     });
 
-    // 1) Get raw content (may include ```fences```)
-    let raw = completion.choices?.[0]?.message?.content || "";
+    let raw = completion.choices?.[0]?.message?.content?.trim() || "";
 
-    // 2) Strip only the outer code fences, preserving inner braces
-    raw = raw
-      .replace(/^```(?:json)?\s*/, "")
-      .replace(/\s*```$/, "")
-      .trim();
+    // Remove ```json and ``` if they exist
+    raw = raw.replace(/^```(?:json)?\s*/, '').replace(/```$/, '').trim();
 
-    // 3) Extract well-formed JSON substring
-    const jsonText = extractJSON(raw) || raw;
-
-    // 4) Parse JSON, fallback to raw reply
-    let payload;
+    let jsonPart;
     try {
-      payload = JSON.parse(jsonText);
+      // Try to extract the { ... } if possible
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (match) {
+        jsonPart = JSON.parse(match[0]);
+      } else {
+        throw new Error("No valid JSON block found.");
+      }
     } catch (e) {
-      console.warn("JSON.parse failed:", e);
-      payload = { reply: raw, suggestions: [] };
+      console.warn("Incomplete or broken JSON:", e);
+      // Fallback if parsing failed
+      return new Response(
+        JSON.stringify({ reply: raw, suggestions: [] }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
     }
 
-    const output = {
-      reply: payload.reply,
-      suggestions: Array.isArray(payload.suggestions) ? payload.suggestions : []
-    };
-
-    // 5) Return pretty-printed JSON
-    return new Response(JSON.stringify(output, null, 2), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    return new Response(
+      JSON.stringify({
+        reply: jsonPart.reply ?? raw,
+        suggestions: Array.isArray(jsonPart.suggestions) ? jsonPart.suggestions : []
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
 
   } catch (err) {
     console.error("OpenAI error:", err);
     return new Response(
-      JSON.stringify(
-        { reply: "AlgaeAdvisor is unavailable.", suggestions: [] },
-        null,
-        2
-      ),
+      JSON.stringify({ reply: "AlgaeAdvisor is unavailable.", suggestions: [] }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
