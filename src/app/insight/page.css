@@ -1,0 +1,76 @@
+/* src/app/insight/page.css */
+
+.insight-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #ccfbf1, #bfdbfe); /* soft aqua-blue blend */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  color: #0f766e; /* deep teal */
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; /* cleaner font */
+}
+
+/* Team Section */
+.team-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+}
+
+.team-member {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid #0d9488; /* matching teal */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.mission-section {
+  text-align: left; /* <--- NEW */
+  max-width: 850px;
+  margin-bottom: 4rem;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mission-heading {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.mission-text {
+  font-size: 1rem;
+  color: #065f46;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.mission-text strong {
+  color: #0d9488;
+  font-weight: 700;
+}
+
+.mission-list {
+  margin: 1rem 0 2rem;
+  padding-left: 1.5rem;
+}
+
+.mission-list li {
+  margin-bottom: 0.75rem;
+  color: #065f46;
+  line-height: 1.6;
+}

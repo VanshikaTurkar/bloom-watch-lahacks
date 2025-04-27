@@ -1,123 +1,67 @@
-// src/app/api/chat/route.js
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
-});
-
-// Helper: reliably extract a single JSON object from messy raw text
-function extractJSON(raw) {
-  let inString = false;
-  let escapeNext = false;
-  let depth = 0;
-  let start = -1;
-
-  for (let i = 0; i < raw.length; i++) {
-    const ch = raw[i];
-    if (!inString) {
-      if (ch === "{") {
-        if (depth === 0) start = i;
-        depth++;
-      } else if (ch === "}") {
-        depth--;
-        if (depth === 0 && start !== -1) {
-          return raw.slice(start, i + 1);
-        }
-      } else if (ch === '"') {
-        inString = true;
-      }
-    } else {
-      if (escapeNext) {
-        escapeNext = false;
-      } else if (ch === "\\") {
-        escapeNext = true;
-      } else if (ch === '"') {
-        inString = false;
-      }
-    }
-  }
-  return null;
-}
-
 export async function POST(req) {
   const { message } = await req.json();
   if (!message) {
     return new Response(
-      JSON.stringify(
-        { reply: "Please send a valid message.", suggestions: [] },
-        null,
-        2
-      ),
+      JSON.stringify({ reply: "Please send a valid message.", suggestions: [] }),
       { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: "gemini-2.0-flash",
-      messages: [
-        {
-          role: "system",
-          content: `
+    const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `
 You are AlgaeAdvisor 🌊.
-Respond only with a JSON object, for example:
-
-\`\`\`json
-{
-  "reply": "## What are algae blooms?\\nThey are…",
-  "suggestions": ["What causes them?", "Are they harmful?"]
-}
-\`\`\`
-
-The server will strip any code fences and extract the JSON automatically.
-`
-        },
-        { role: "user", content: message }
-      ],
-      max_tokens: 300
+When you reply, output a JSON object with two keys:
+- "reply": a Markdown-formatted string
+- "suggestions": an array of up to 4 suggestions
+Wrap your entire reply inside \`\`\`json\n...\`\`\` fences.
+Here is the user's question: ${message}
+          ` }]
+          }
+        ]
+      })
     });
 
-    // 1) Get raw content (may include ```fences```)
-    let raw = completion.choices?.[0]?.message?.content || "";
+    const geminiData = await geminiRes.json();
+    let raw = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
-    // 2) Strip only the outer code fences, preserving inner braces
-    raw = raw
-      .replace(/^```(?:json)?\s*/, "")
-      .replace(/\s*```$/, "")
-      .trim();
+    // Clean up ```json ... ``` fences
+    raw = raw.replace(/^```(?:json)?\s*/, '').replace(/```$/, '').trim();
 
-    // 3) Extract well-formed JSON substring
-    const jsonText = extractJSON(raw) || raw;
-
-    // 4) Parse JSON, fallback to raw reply
-    let payload;
+    let jsonPart;
     try {
-      payload = JSON.parse(jsonText);
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (match) {
+        jsonPart = JSON.parse(match[0]);
+      } else {
+        throw new Error("No valid JSON block found.");
+      }
     } catch (e) {
-      console.warn("JSON.parse failed:", e);
-      payload = { reply: raw, suggestions: [] };
+      console.warn("Broken or incomplete JSON from Gemini:", e);
+      return new Response(
+        JSON.stringify({ reply: raw, suggestions: [] }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
     }
 
-    const output = {
-      reply: payload.reply,
-      suggestions: Array.isArray(payload.suggestions) ? payload.suggestions : []
-    };
-
-    // 5) Return pretty-printed JSON
-    return new Response(JSON.stringify(output, null, 2), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    return new Response(
+      JSON.stringify({
+        reply: jsonPart.reply ?? raw,
+        suggestions: Array.isArray(jsonPart.suggestions) ? jsonPart.suggestions : []
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
 
   } catch (err) {
-    console.error("OpenAI error:", err);
+    console.error("Gemini API error:", err);
     return new Response(
-      JSON.stringify(
-        { reply: "AlgaeAdvisor is unavailable.", suggestions: [] },
-        null,
-        2
-      ),
+      JSON.stringify({ reply: "AlgaeAdvisor is temporarily unavailable.", suggestions: [] }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
