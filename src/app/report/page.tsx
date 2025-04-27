@@ -111,7 +111,7 @@ const ReportBloom: React.FC = () => {
             </div>
 
             {/* Description */}
-            <div>
+            <div className={styles.description}>
               <label className={styles.label}>Description</label>
               <textarea
                 value={description}
