@@ -137,11 +137,23 @@
 }
 
 .submitContainer {
+  margin-top: 20px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .submitButton {
+  background: #0d9488;
+  color: white;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: background 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.generateButton{
   background: #0d9488;
   color: white;
   padding: 1rem 2rem;
@@ -177,3 +189,74 @@
   background: #fee2e2;
   color: #b91c1c;
 }
+
+/* —————  Popup overlay  ————— */
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(6px);          /* soft blur */
+  background: rgba(0,0,0,0.25);        /* subtle dim */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;                       /* above navbar */
+}
+
+/* —————  Popup card  ————— */
+.popupCard {
+  width: 90%;
+  max-width: 500px;
+  background: rgba(255,255,255,0.85);  /* glazed white */
+  border-radius: 1.5rem;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Heading + input reuse your existing palette */
+.popupHeading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0d9488;
+  margin: 0;
+}
+
+.popupInput {
+  border: 2px solid #0d9488;
+  border-radius: 9999px;
+  padding: 0.8rem 1.25rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.popupInput:focus {
+  box-shadow: 0 0 0 3px rgba(13,148,136,0.25);
+}
+
+.popupActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.popupBtn {
+  padding: 0.6rem 1.8rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.popupPrimary   { background:#0d9488; color:#fff; }
+.popupPrimary:hover { background:#0b786d; }
+
+.popupSecondary {
+  background: transparent;
+  color:#0d9488;
+  border:2px solid #0d9488;
+}
+.popupSecondary:hover { background:rgba(13,148,136,0.1); }
