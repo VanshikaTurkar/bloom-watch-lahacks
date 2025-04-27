@@ -30,8 +30,8 @@ body {
 
 /* src/app/globals.css (or wherever your global styles are) */
 
-.site-background {
+/*.site-background {
   min-height: 100vh;
   background: linear-gradient(to bottom right, #ccfbf1, #bfdbfe);
-  background-attachment: fixed; /* (optional) keeps it smooth during scroll */
-}
+  background-attachment: fixed; /* (optional) keeps it smooth during scroll 
+}*/
