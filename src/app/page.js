@@ -12,7 +12,9 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <HomePage> </HomePage>
+      <main className="p-8">
+        <HomePage></HomePage>
+      </main>
     </>
   );
 }
