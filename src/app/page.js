@@ -5,7 +5,7 @@ import Navbar from "../app/components/Navbar";
 import HomePage from "../app/pages/HomePage"; // <-- You need to import HomePage!
 
 // Dynamic import disables SSR for this component
-const Map = dynamic(() => import("./components/Map"), { ssr: false });
+const Map = dynamic(() => import("./map/Map"), { ssr: false });
 
 export default function Home() {
   return (
