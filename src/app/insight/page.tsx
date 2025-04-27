@@ -7,9 +7,35 @@ const Insight = () => {
     <div className="insight-page">
       <Navbar></Navbar>
       <section className="mission-section">
-        <h2 className="mission-heading">Our Mission</h2>
+        <h1 className="mission-heading">Our Mission</h1>
+
         <p className="mission-text">
-          Recent wildfires in Los Angeles and surrounding areas have led to a surge in harmful algae blooms (HABs) across rivers, lakes, and coastal waters. After fires burn through forests and hillsides, rainstorms wash nutrient-rich ash — full of nitrogen and phosphorus — into nearby waterways, effectively fertilizing them. This runoff fuels explosive algae growth, particularly of toxic species like cyanobacteria and red tide organisms. These blooms harm both people and wildlife: they release toxins that can cause rashes, nausea, respiratory issues, and even liver damage in humans, while pets and wildlife suffer severe poisoning, fish die-offs, and ecosystem collapse due to oxygen depletion. Recent blooms have closed recreational beaches, contaminated drinking water sources, and triggered health advisories across the region, highlighting the devastating chain reaction between wildfire, runoff, and coastal ecosystem health.
+          Recent <strong>wildfires</strong> in Los Angeles and surrounding areas have led to a surge in
+          <strong> harmful algae blooms (HABs)</strong> across rivers, lakes, and coastal waters.
+        </p>
+
+        <p className="mission-text">
+          After fires burn through forests and hillsides, <strong> rainstorms</strong> wash
+          <strong> nutrient-rich ash</strong> — full of <strong> nitrogen</strong> and <strong> phosphorus</strong> —
+          into nearby waterways, fertilizing them. This runoff fuels explosive growth of
+          <strong> toxic algae species</strong> like <strong> cyanobacteria</strong> and
+          <strong> red tide organisms</strong>.
+        </p>
+
+        <p className="mission-text">
+          <strong>These blooms cause:</strong>
+        </p>
+
+        <ul className="mission-list">
+          <li><strong> Health risks:</strong> rashes, nausea, respiratory issues, liver damage</li>
+          <li><strong> Wildlife impacts:</strong> pets and animals suffer poisoning, fish die-offs, ecosystem collapse</li>
+          <li><strong> Environmental damage:</strong> oxygen depletion, loss of aquatic life</li>
+          <li><strong> Community disruption:</strong> beach closures, contaminated drinking water, public health advisories</li>
+        </ul>
+
+        <p className="mission-text">
+          The devastating chain reaction between <strong> wildfires</strong>, <strong> runoff</strong>,
+          and <strong> coastal ecosystem health</strong> highlights the urgent need for action.
         </p>
       </section>
 

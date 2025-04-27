@@ -21,9 +21,7 @@ export default function Home() {
         <p className="text-lg text-gray-600">
           This is your default home page with a navbar.
         </p>
-        <Form></Form>
         <Map></Map>
-        <Alert></Alert>
       </main>
     </>
   );

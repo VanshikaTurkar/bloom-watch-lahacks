@@ -1,6 +1,7 @@
 'use client';
 
 import Navbar from '../components/Navbar';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 type Report = {
@@ -20,11 +21,24 @@ const reports: Report[] = [
 ];
 
 export default function ReportsDashboard() {
+  const router = useRouter();
+
   return (
     <main className={styles.page}>
       <Navbar />
       
       <div className={styles.card}>
+        {/* Add Report Button */}
+        {/* ADD CODE */}
+        <div className={styles.headerRow}>
+          <button
+            className={styles.reportButton}
+            onClick={() => router.push('/report')}
+          >
+            + New Report
+          </button>
+        </div>
+        {/* ADD CODE */}
         <center><h1 className={styles.heading}>Reports Dashboard</h1></center>
 
         <div className={styles.grid}>

@@ -1,27 +1,43 @@
-/* Insight.css */
+/* src/app/insight/page.css */
 
 .insight-page {
   min-height: 100vh;
-
-  background: linear-gradient(to bottom right, #d1fae5, #a7f3d0, #cffafe); /* mint green + aqua */
+  background: linear-gradient(to bottom right, #ccfbf1, #bfdbfe); /* soft aqua-blue blend */
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #065f46; /* deep green text */
-  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif; /* playful, no Google Fonts */
+  padding: 2rem;
+  color: #0f766e; /* deep teal */
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; /* cleaner font */
 }
 
-.insight-title {
-  font-size: 4rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
-  color: #064e3b;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+/* Team Section */
+.team-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+}
+
+.team-member {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid #0d9488; /* matching teal */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
 .mission-section {
+  text-align: left; /* <--- NEW */
   max-width: 850px;
-  text-align: center;
   margin-bottom: 4rem;
   background: rgba(255, 255, 255, 0.75);
   padding: 2rem;
@@ -30,39 +46,31 @@
 }
 
 .mission-heading {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #047857;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .mission-text {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #065f46;
-  margin-bottom: 1rem;
-  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
 }
 
-.team-section {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  flex-wrap: wrap;
+.mission-text strong {
+  color: #0d9488;
+  font-weight: 700;
 }
 
-.team-member {
-  width: 180px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 5px solid #34d399; /* light green border */
-  background: linear-gradient(to bottom, #6ee7b7, #a7f3d0); /* cute green-blue halo */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.mission-list {
+  margin: 1rem 0 2rem;
+  padding-left: 1.5rem;
 }
 
-/* Hover effect */
-.team-member:hover {
-  transform: scale(1.1) rotate(2deg);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+.mission-list li {
+  margin-bottom: 0.75rem;
+  color: #065f46;
+  line-height: 1.6;
 }
