@@ -1,0 +1,68 @@
+/* Insight.css */
+
+.insight-page {
+  min-height: 100vh;
+
+  background: linear-gradient(to bottom right, #d1fae5, #a7f3d0, #cffafe); /* mint green + aqua */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #065f46; /* deep green text */
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif; /* playful, no Google Fonts */
+}
+
+.insight-title {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: #064e3b;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.mission-section {
+  max-width: 850px;
+  text-align: center;
+  margin-bottom: 4rem;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mission-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #047857;
+}
+
+.mission-text {
+  font-size: 0.8rem;
+  color: #065f46;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.team-section {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.team-member {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid #34d399; /* light green border */
+  background: linear-gradient(to bottom, #6ee7b7, #a7f3d0); /* cute green-blue halo */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.team-member:hover {
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
