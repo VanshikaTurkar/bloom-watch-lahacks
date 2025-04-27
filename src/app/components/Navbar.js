@@ -21,7 +21,7 @@ export default function Navbar() {
               <Link href="/map">Map</Link>
             </TabsTrigger>
             <TabsTrigger value="report" className="tabs-trigger">
-              <Link href="/report">Report</Link>
+              <Link href="/report-dashboard">Report</Link>
             </TabsTrigger>
             <TabsTrigger value="insight" className="tabs-trigger">
               <Link href="/insight">Insight</Link>

@@ -1,6 +1,7 @@
 'use client';
 
 import Navbar from '../components/Navbar';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
@@ -23,6 +24,7 @@ const reports: Report[] = [
 ];
 
 export default function ReportsDashboard() {
+  const router = useRouter();
   const [submissions, setSubmissions] = useState([]); // State to store the submissions
     const [loading, setLoading] = useState(true); // State to manage loading state
     const [error, setError] = useState(null); // State for errors
@@ -59,6 +61,17 @@ export default function ReportsDashboard() {
       <Navbar />
       
       <div className={styles.card}>
+        {/* Add Report Button */}
+        {/* ADD CODE */}
+        <div className={styles.headerRow}>
+          <button
+            className={styles.reportButton}
+            onClick={() => router.push('/report')}
+          >
+            + New Report
+          </button>
+        </div>
+        {/* ADD CODE */}
         <center><h1 className={styles.heading}>Reports Dashboard</h1></center>
 
         <div className={styles.grid}>
