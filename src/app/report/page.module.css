@@ -137,8 +137,9 @@
 }
 
 .submitContainer {
+  margin-top: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .submitButton {
@@ -152,7 +153,21 @@
   border: none;
 }
 
+.generateButton {
+  background: #0d9488;
+  color: white;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: background 0.2s;
+  cursor: pointer;
+  border: none;
+}
 .submitButton:hover {
+  background: #0b786d;
+}
+
+.generateButton:hover {
   background: #0b786d;
 }
 
@@ -177,3 +192,59 @@
   background: #fee2e2;
   color: #b91c1c;
 }
+/* ==== Popup overlay & animation ====================================== */
+
+/* ---- popup overlay ---- */
+.popupOverlay{
+  position:fixed;
+  inset:0;                         /* full-screen */
+  background:rgba(0,0,0,.25);      /* translucent dim */
+  backdrop-filter:blur(4px);       /* soft blur */
+  z-index:40;                      /* below the card, above everything else */
+  animation:fade-in .2s ease;
+}
+
+/* ---- white card ---- */
+.popup{
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:min(90%,420px);
+  background:#fff;
+  border:2px solid #0d9488;
+  border-radius:1.25rem;
+  box-shadow:0 12px 32px rgba(0,0,0,.15);
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  gap:1.25rem;
+  z-index:50;                      /* above the overlay */
+  animation:slide-up .25s ease;
+}
+
+@keyframes fade-in {from{opacity:0} to{opacity:1}}
+@keyframes slide-up{
+  from{transform:translate(-50%,-40%);opacity:0}
+  to  {transform:translate(-50%,-50%);opacity:1}
+}
+
+/* input + button inside */
+.popupInput{
+  padding:.8rem 1rem;
+  border:1px solid #cbd5e1;
+  border-radius:.75rem;
+  outline:none;
+  font-size:1rem;
+}
+.popupButton{
+  align-self:flex-end;
+  background:#0d9488;
+  color:#fff;
+  border:none;
+  padding:.8rem 1.5rem;
+  border-radius:.75rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .2s;
+}
+.popupButton:hover{background:#0b766e}
