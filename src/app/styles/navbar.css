@@ -1,6 +1,9 @@
 .navbar {
-    background-color: #E6FFFA;
+    /*background-color: #E6FFFA;*/
+    background-color: transparent;
+    margin-top: 3%;
     padding: 1rem 0;
+    width: 100%;
   }
   .navbar-container {
     max-width: 64rem;
