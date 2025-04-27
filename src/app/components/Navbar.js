@@ -8,13 +8,13 @@ import '../styles/navbar.css';
 export default function Navbar() {
   const pathname = usePathname();
   const defaultValue = pathname.replace('/', '') || 'map';
-
+  
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <Tabs defaultValue={defaultValue} className="tabs-wrapper">
           <TabsList className="tabs-list">
-            <TabsTrigger value="map" className="tabs-trigger">
+            <TabsTrigger value="home" className="tabs-trigger">
               <Link href="/">Home</Link>
             </TabsTrigger>
             <TabsTrigger value="map" className="tabs-trigger">
