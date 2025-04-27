@@ -2,8 +2,8 @@
 import dynamic from "next/dynamic";
 
 // Dynamic import disables SSR for this component
-const Form = dynamic(() => import("./components/FormSubmit"), {ssr:false});
-const Alert = dynamic(() => import("./components/Alert"), {ssr:false});
+const Form = dynamic(() => import("./report/FormSubmit"), {ssr:false});
+const Alert = dynamic(() => import("./report/Alert"), {ssr:false});
 
 // src/app/page.js
 import Navbar from "../app/components/Navbar";
