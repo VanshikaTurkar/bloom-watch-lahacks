@@ -5,6 +5,8 @@ import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import Map from '../map/Map'; // Assuming Map component is already created
 //import { Tabs, TabsList, TabsTrigger } from "../components/ui/Tabs";
+import { FaUserSecret, FaSearch } from 'react-icons/fa'; // Detective + Magnifying Glass
+import { GiCoral } from 'react-icons/gi'; // Coral = Algae
 
 export default function HomePage() {
   const [search, setSearch] = useState('');
@@ -27,13 +29,19 @@ export default function HomePage() {
       </Tabs> */}
 
       {/* Logo Section */}
+      {/* Logo Section */}
       <div className="flex items-center gap-3 mb-6 z-10">
-        <span className="text-4xl">🌊</span>
+        <div className="flex items-center gap-1 text-4xl text-teal-700 transition-transform duration-300 hover:scale-110">
+          <FaUserSecret />
+          <FaSearch />
+        </div>
         <h1 className="text-5xl font-extrabold text-teal-700 tracking-wide">
           BloomWatch
         </h1>
-        <span className="text-4xl">🦠</span>
+        <GiCoral className="text-4xl text-teal-700 transition-transform duration-300 hover:scale-125 hover:rotate-6 animate-pulse" />
       </div>
+
+
 
       {/* Search Bar */}
       <div className="w-full max-w-md mb-8 z-10">
