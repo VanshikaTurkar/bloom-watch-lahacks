@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 
 // Dynamic import disables SSR for this component
 const Map = dynamic(() => import("./components/Map"), { ssr: false });
+const Form = dynamic(() => import("./components/FormSubmit"), {ssr:false});
+const Alert = dynamic(() => import("./components/Alert"), {ssr:false});
 
 // src/app/page.js
 import Navbar from "../app/components/Navbar";
@@ -16,7 +18,9 @@ export default function Home() {
         <p className="text-lg text-gray-600">
           This is your default home page with a navbar.
         </p>
+        <Form></Form>
         <Map></Map>
+        <Alert></Alert>
       </main>
     </>
   );

@@ -1,42 +1,83 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const eventRoutes = require("./routes/eventRoutes");
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
-const PORT = 5000;
-const uri = "mongodb+srv://vanshikaturkar:SyCBJfwiHzQPPdpu@bloom-watch.wyfzubg.mongodb.net/"; // Replace with your MongoDB connection string
+dotenv.config();
 
-// Connect to the MongoDB database
-async function connectToDatabase() {
-  try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("Connected to MongoDB");
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    process.exit(1); // Exit the process if the connection fails
-  }
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(express.json());
+
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  console.error("MongoDB URI is not defined in .env file.");
+  process.exit(1);
 }
 
-connectToDatabase();
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
-// Start the Node Express server
-const app = express();
-
-// Middleware
-app.use(cors()); // Enable cross-origin requests
-app.use(express.json()); // Parse incoming JSON requests
-
-// Routes
-app.use("/events", eventRoutes); // Mount event routes
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Internal Server Error" });
+// Define the Mongoose schema for the form data
+const formSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    required: true,
+    enum: ['bloom', 'animal'],
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-// Start listening
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Create a Mongoose model based on the schema
+const Observation = mongoose.model('Observation', formSchema); // Correct model definition
+
+// API endpoint to handle form submissions
+app.post('/api/submit-observation', async (req, res) => {
+  console.log("POST request attempt - vanvan");
+  console.log("Request Body:", req.body);
+  try {
+    console.log("Inside try block");
+    const { type, location, description, date } = req.body;
+    // const newObservation = new mongoose.model('Observation', new mongoose.Schema({})); // REMOVE this line
+    console.log("Before save");
+    const savedObservation = await Observation({ // Use the correct Observation model
+      type,
+      location,
+      description,
+      date,
+    }).save();
+    console.log("After save");
+    res.status(201).json({ message: 'Observation submitted successfully', data: savedObservation });
+    console.log("After response sent");
+  } catch (error) {
+    console.error('Error submitting observation:', error);
+    console.log("Inside catch block");
+    res.status(500).json({ message: 'Failed to submit observation', error: error.message });
+  }
+  console.log("Route end");
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
