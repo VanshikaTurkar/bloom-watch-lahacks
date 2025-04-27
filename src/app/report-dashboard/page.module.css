@@ -7,70 +7,81 @@
   padding: 2rem;
 }
 
+/* Page Title */
 .heading {
   font-size: 2.5rem;
   font-weight: 800;
   color: #0d9488;
-  margin: 2rem 0 2.5rem;
+  margin: 2.5rem 0;
+}
+
+/* Outer Card */
+.card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
 }
 
 /* Grid Layout */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  width: 100%;
-  max-width: 1200px;
-  margin-bottom: 3rem;
+  margin-top: 2rem;
 }
 
 /* Individual Report Card */
 .reportCard {
-  background: #ccfbf1;
+  background: #ffffff; /* PURE WHITE */
   padding: 1.5rem;
   border-radius: 1.5rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: transform 0.2s;
-  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   cursor: pointer;
 }
 
 .reportCard:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-/* Badge styling */
+/* Badge Inverted Style */
 .badge {
-  align-self: flex-start;
+  display: inline-block;
   padding: 0.4rem 0.8rem;
   border-radius: 9999px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: #f1f5f9; /* light gray/blue */
+  color: #0f766e;
 }
 
-/* Inverted badge colors */
+/* Specific Badge Colors */
 .bloom {
-  background-color: #ccfbf1;
-  color: #0f766e;
+  background-color: #e0fdfa;
+  color: #0d9488;
 }
 .animal {
   background-color: #fef9c3;
   color: #854d0e;
 }
 .general {
-  background-color: #dbeafe;
-  color: #1e40af;
+  background-color: #e0e7ff;
+  color: #4338ca;
 }
 
-/* Text styling */
+/* Card Text */
 .location {
   font-size: 1.25rem;
   font-weight: 700;
   color: #0d9488;
-  margin-top: 0.5rem;
 }
 
 .description {
@@ -79,12 +90,7 @@
 }
 
 .date {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #64748b;
-}
-
-.card {
-  background-color: white;
-  border-radius: 30px;
-  padding: 15px 60px;
+  margin-top: auto;
 }
