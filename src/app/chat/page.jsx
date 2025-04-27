@@ -1,4 +1,3 @@
-// src/app/chat/page.jsx
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -24,11 +23,27 @@ export default function ChatPage() {
     'Where are blooms happening?'
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const [typingDots, setTypingDots] = useState('');
   const chatEndRef = useRef(null);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Typing animation (dots: . .. ...)
+  useEffect(() => {
+    if (!isTyping) {
+      setTypingDots('');
+      return;
+    }
+    const interval = setInterval(() => {
+      setTypingDots(prev => {
+        if (prev.length >= 3) return '';
+        return prev + '.';
+      });
+    }, 500);
+    return () => clearInterval(interval);
+  }, [isTyping]);
 
   const sendMessage = async (overrideText) => {
     const text = overrideText ?? input.trim();
@@ -46,11 +61,9 @@ export default function ChatPage() {
         body: JSON.stringify({ message: text })
       });
 
-      // API returns { reply, suggestions }
       const data = await res.json();
       let { reply: rawReply, suggestions: rawSug } = data;
 
-      // Client-side JSON fallback: if reply is raw JSON string, parse it
       let parsedReply = rawReply;
       let parsedSug = Array.isArray(rawSug) ? rawSug : [];
       if (typeof rawReply === 'string' && rawReply.trim().startsWith('{')) {
@@ -100,13 +113,18 @@ export default function ChatPage() {
         <div className="chat-messages">
           {messages.map((msg, i) => (
             <div key={i} className={`chat-message ${msg.sender}`}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>  
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {msg.text}
               </ReactMarkdown>
             </div>
           ))}
 
-          {isTyping && <p className="chat-typing">AlgaeAdvisor is typing…</p>}
+          {isTyping && (
+            <div className="shimmer-wrapper">
+              <div className="shimmer"></div>
+              <p className="chat-typing">AlgaeAdvisor is typing{typingDots}</p>
+            </div>
+          )}
           <div ref={chatEndRef} />
         </div>
 
@@ -116,9 +134,10 @@ export default function ChatPage() {
               <button
                 key={i}
                 className="suggestion-btn"
-                onClick={() => sendMessage(s)}
+                onClick={() => setInput(s)} // instead of sending immediately!
+                title={s}
               >
-                {s}
+                {s.length > 40 ? s.slice(0, 40) + '…' : s}
               </button>
             ))}
           </div>

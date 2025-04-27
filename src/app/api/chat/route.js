@@ -1,46 +1,41 @@
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
-});
-
 export async function POST(req) {
   const { message } = await req.json();
   if (!message) {
-    return new Response(JSON.stringify({ reply: "Please send a valid message.", suggestions: [] }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" }
-    });
+    return new Response(
+      JSON.stringify({ reply: "Please send a valid message.", suggestions: [] }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
   }
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: "gemini-2.0-flash",
-      messages: [
-        {
-          role: "system",
-          content: `
+    const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `
 You are AlgaeAdvisor 🌊.
 When you reply, output a JSON object with two keys:
 - "reply": a Markdown-formatted string
 - "suggestions": an array of up to 4 suggestions
-Wrap it inside \`\`\`json\n ... \`\`\` fences.
-`
-        },
-        { role: "user", content: message }
-      ],
-      max_tokens: 700  // increased to reduce cutoffs
+Wrap your entire reply inside \`\`\`json\n...\`\`\` fences.
+Here is the user's question: ${message}
+          ` }]
+          }
+        ]
+      })
     });
 
-    let raw = completion.choices?.[0]?.message?.content?.trim() || "";
+    const geminiData = await geminiRes.json();
+    let raw = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
-    // Remove ```json and ``` if they exist
+    // Clean up ```json ... ``` fences
     raw = raw.replace(/^```(?:json)?\s*/, '').replace(/```$/, '').trim();
 
     let jsonPart;
     try {
-      // Try to extract the { ... } if possible
       const match = raw.match(/\{[\s\S]*\}/);
       if (match) {
         jsonPart = JSON.parse(match[0]);
@@ -48,8 +43,7 @@ Wrap it inside \`\`\`json\n ... \`\`\` fences.
         throw new Error("No valid JSON block found.");
       }
     } catch (e) {
-      console.warn("Incomplete or broken JSON:", e);
-      // Fallback if parsing failed
+      console.warn("Broken or incomplete JSON from Gemini:", e);
       return new Response(
         JSON.stringify({ reply: raw, suggestions: [] }),
         { status: 200, headers: { "Content-Type": "application/json" } }
@@ -65,9 +59,9 @@ Wrap it inside \`\`\`json\n ... \`\`\` fences.
     );
 
   } catch (err) {
-    console.error("OpenAI error:", err);
+    console.error("Gemini API error:", err);
     return new Response(
-      JSON.stringify({ reply: "AlgaeAdvisor is unavailable.", suggestions: [] }),
+      JSON.stringify({ reply: "AlgaeAdvisor is temporarily unavailable.", suggestions: [] }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
