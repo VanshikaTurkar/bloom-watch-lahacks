@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react';
 import Navbar from '../components/Navbar'; // ✅ importing your Navbar
 import styles from './page.module.css';
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "./firebaseConfig"; // Adjust the import path as needed
+import { db } from "../firebaseConfig"; // Adjust the import path as needed
 
 
   
@@ -162,7 +162,7 @@ const ReportBloom: React.FC = () => {
             </div>
 
             {/* Description */}
-            <div>
+            <div className={styles.description}>
               <label className={styles.label}>Description</label>
               <textarea
                 value={description}
