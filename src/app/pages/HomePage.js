@@ -41,19 +41,6 @@ export default function HomePage() {
         <GiCoral className="text-4xl text-teal-700 transition-transform duration-300 hover:scale-125 hover:rotate-6 animate-pulse" />
       </div>
 
-
-
-      {/* Search Bar */}
-      <div className="w-full max-w-md mb-8 z-10">
-        <Input
-          type="text"
-          placeholder="Search bloom reports..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="rounded-full border-2 border-teal-400 focus:ring-teal-500 focus:border-teal-500 bg-white/80 backdrop-blur"
-        />
-      </div>
-
       {/* Map Section */}
       <div className="relative w-full max-w-4xl h-[500px] rounded-3xl shadow-lg p-6 mb-6 z-10">
           <Map />
@@ -70,15 +57,6 @@ export default function HomePage() {
         </div>
       {/*</div>*/}
 
-      {/* Buttons */}
-      <div className="flex gap-4 z-10">
-        <Button variant="outline" className="border-teal-500 text-teal-600 hover:bg-teal-100 rounded-full px-6 py-3 text-lg">
-          Report Incident
-        </Button>
-        <Button variant="outline" className="border-blue-500 text-blue-600 hover:bg-blue-100 rounded-full px-6 py-3 text-lg">
-          View Risk
-        </Button>
-      </div>
     </main>
   );
 }
