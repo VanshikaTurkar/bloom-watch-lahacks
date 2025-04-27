@@ -1,0 +1,21 @@
+/* Ensure the flex children behave as expected */
+.flex-row.flex-grow {
+    height: calc(100vh - 4rem) !important; /* adjust for your Navbar height */
+    min-width: 0;
+    min-height: 0;
+  }
+  
+  .flex-grow.h-full {
+    flex: 1 1 auto !important;
+    height: 100% !important;
+    min-width: 0;
+    min-height: 0;
+  }
+  
+  .w-64.h-full {
+    flex: 0 0 16rem !important;
+    height: 100% !important;
+    min-width: 0;
+    min-height: 0;
+  }
+  
