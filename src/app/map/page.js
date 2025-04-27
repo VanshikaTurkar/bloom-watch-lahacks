@@ -7,13 +7,13 @@ export default function HomePage() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       
-      {/* Map Background */}
-      <div className="absolute inset-0 -z-10">
-        <Map /> {/* Map fills whole background */}
+       {/* Map Container */}
+       <div className="relative w-full h-screen z-10">
+        <Map /> {/* Map fills the entire screen */}
       </div>
 
       {/* Navbar Floating */}
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20">
+      <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-30">
         <Navbar />
       </div>
 
