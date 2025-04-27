@@ -56,7 +56,7 @@ html, body {
 
 /* 3. Header */
 .chat-title {
-  margin: 2rem 0 2.5rem;
+  margin: 2rem 0 1.5rem;
   z-index: 10;
 }
 .chat-title h1 {
@@ -84,7 +84,7 @@ html, body {
   overflow: hidden;
   z-index: 10;
 }
-.chat-window.initial { height: 30vh; }
+.chat-window.initial { height: 45vh; }
 .chat-window.expanded { height: 70vh; }
 
 /* 5. Internal scrolling for messages */
