@@ -1,46 +1,36 @@
 "use client";
-import Link from "next/link";
-import { useState } from "react";
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Tabs, TabsList, TabsTrigger } from './ui/Tabs';
+import '../styles/navbar.css';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-
+  const pathname = usePathname();
+  const defaultValue = pathname.replace('/', '') || 'map';
+  
   return (
-    <nav className="bg-blue-600 text-white px-6 py-4 shadow-md">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold">
-          MyApp
-        </Link>
-
-        <button
-          className="sm:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle Menu"
-        >
-          ☰
-        </button>
-
-        <ul
-          className={`sm:flex gap-6 ${
-            isOpen ? "block mt-4" : "hidden"
-          } sm:mt-0 sm:block`}
-        >
-          <li>
-            <Link href="/" className="hover:underline">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link href="/about" className="hover:underline">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact" className="hover:underline">
-              Contact
-            </Link>
-          </li>
-        </ul>
+    <nav className="navbar">
+      <div className="navbar-container">
+        <Tabs defaultValue={defaultValue} className="tabs-wrapper">
+          <TabsList className="tabs-list">
+            <TabsTrigger value="home" className="tabs-trigger">
+              <Link href="/">Home</Link>
+            </TabsTrigger>
+            <TabsTrigger value="map" className="tabs-trigger">
+              <Link href="/map">Map</Link>
+            </TabsTrigger>
+            <TabsTrigger value="report" className="tabs-trigger">
+              <Link href="/report">Report</Link>
+            </TabsTrigger>
+            <TabsTrigger value="insight" className="tabs-trigger">
+              <Link href="/insight">Insight</Link>
+            </TabsTrigger>
+            <TabsTrigger value="chat" className="tabs-trigger">
+              <Link href="/chat">Chat</Link>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
     </nav>
   );

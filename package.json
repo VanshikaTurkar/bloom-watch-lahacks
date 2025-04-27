@@ -13,13 +13,19 @@
     "cors": "^2.8.5",
     "firebase": "^11.6.1",
     "leaflet": "^1.9.4",
+    "lightningcss": "^1.29.3",
+    "lucide-react": "^0.503.0",
     "next": "15.3.1",
+    "openai": "^4.96.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "@types/react": "19.1.2",
+    "typescript": "5.8.3"
   }
 }
