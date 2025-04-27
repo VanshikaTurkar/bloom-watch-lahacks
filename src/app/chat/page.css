@@ -191,11 +191,13 @@ html, body {
 /* 10. Quick-reply chips */
 .suggestions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 2rem 0;
-  z-index: 10;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 1rem;
+  margin-top: 2rem;
+  scroll-behavior: smooth;
 }
+
 .suggestion-btn {
   background: rgba(13,148,136,0.1);
   border: 1px solid #0d9488;
@@ -204,8 +206,36 @@ html, body {
   border-radius: 9999px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+  position: relative;
 }
-.suggestion-btn:hover {
-  background: rgba(13,148,136,0.2);
+
+/* FADE-IN tooltip */
+.suggestion-btn:hover::after {
+  content: attr(data-fulltext);
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0d9488;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  white-space: normal;
+  max-width: 250px;
+  text-align: center;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.suggestion-btn:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
 }

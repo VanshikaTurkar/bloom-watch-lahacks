@@ -181,6 +181,13 @@ const ReportBloom: React.FC = () => {
             {/* Submit */}
             <div className={styles.submitContainer}>
               <button
+              type="button"
+              className="generateButton"
+              onClick={() => setShowModal(true)}
+            >
+              Generate Description
+            </button>
+              <button
                 type="submit"
                 disabled={isSubmitting}
                 className={styles.submitButton}
